@@ -2,41 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* ImmersiVerse OS Design System - Cinematic & Futuristic
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Color Palette - Cinematic Space Theme */
+    --background: 218 52% 5%;  /* Deep Space Black #0B0F14 */
+    --foreground: 193 35% 86%; /* Cool White #DFF7FF */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 218 45% 8%;        /* Card Surface #101620 */
+    --card-foreground: 193 35% 86%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 218 45% 8%;
+    --popover-foreground: 193 35% 86%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 186 100% 56%;   /* Cosmic Teal #22D3EE */
+    --primary-foreground: 218 52% 5%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 243 100% 67%; /* Indigo Pulse #6366F1 */
+    --secondary-foreground: 193 35% 86%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 207 22% 69%;      /* Muted Gray-Blue #9FB5C3 */
+    --muted-foreground: 207 22% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 243 100% 67%;
+    --accent-foreground: 193 35% 86%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 193 35% 86%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 218 32% 15%;
+    --input: 218 32% 12%;
+    --ring: 186 100% 56%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom Portal & Cinematic Variables */
+    --portal-glow: 186 100% 56%;
+    --portal-pulse: 243 100% 67%;
+    --starfield: 193 20% 25%;
+    --gradient-portal: linear-gradient(135deg, hsl(186 100% 56% / 0.3), hsl(243 100% 67% / 0.5));
+    --gradient-card: linear-gradient(145deg, hsl(218 45% 8% / 0.8), hsl(218 32% 12% / 0.4));
+    --shadow-portal: 0 0 80px hsl(186 100% 56% / 0.4);
+    --shadow-card: 0 20px 60px -20px hsl(218 52% 5% / 0.8);
+    
+    /* Animation Variables */
+    --transition-portal: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +114,88 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
+}
+
+@layer components {
+  /* Portal and Cinematic Effects */
+  .portal-glow {
+    box-shadow: var(--shadow-portal);
+    background: var(--gradient-portal);
+    animation: portal-pulse 6s ease-in-out infinite;
+  }
+  
+  .starfield {
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsl(var(--starfield)), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(var(--starfield)), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(var(--starfield)), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: starfield-drift 120s linear infinite;
+  }
+  
+  .feature-card {
+    background: var(--gradient-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.3);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 80px -20px hsl(var(--primary) / 0.2);
+    border-color: hsl(var(--primary) / 0.5);
+  }
+  
+  .hero-gradient {
+    background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 70%);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .animate-portal-pulse {
+    animation: portal-pulse 6s ease-in-out infinite;
+  }
+  
+  .animate-starfield {
+    animation: starfield-drift 120s linear infinite;
+  }
+  
+  .animate-silhouette-walk {
+    animation: silhouette-walk 8s ease-in-out infinite;
+  }
+}
+
+@keyframes portal-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 80px hsl(var(--primary) / 0.6);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes starfield-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-200px); }
+}
+
+@keyframes silhouette-walk {
+  0%, 100% { transform: translateX(0) scale(1); opacity: 0.7; }
+  25% { transform: translateX(10px) scale(1.05); opacity: 0.9; }
+  50% { transform: translateX(20px) scale(1); opacity: 1; }
+  75% { transform: translateX(15px) scale(0.95); opacity: 0.8; }
 }
