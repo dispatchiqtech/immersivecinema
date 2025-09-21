@@ -25,11 +25,11 @@ const Hero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="font-space text-6xl md:text-8xl font-bold mb-6 text-gradient">
+        <h1 className="font-space text-6xl md:text-8xl font-bold mb-6 text-gradient drop-shadow-2xl">
           Step Into Infinite Worlds
         </h1>
         
-        <p className="text-xl md:text-2xl text-muted mb-8 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed font-light drop-shadow-lg">
           The future of immersive cinema. Create, publish, and experience stories like never before.
         </p>
         
@@ -37,12 +37,12 @@ const Hero = () => {
           <Button variant="hero" size="lg" className="px-8 py-4 text-lg font-semibold">
             Join as Creator
           </Button>
-          <Button variant="outline" size="lg" className="px-8 py-4 text-lg font-semibold">
+          <Button variant="hero" size="lg" className="px-8 py-4 text-lg font-semibold">
             Explore as Viewer
           </Button>
         </div>
         
-        <p className="text-sm text-muted-foreground mt-6">
+        <p className="text-sm text-white/70 mt-6 font-medium">
           Early access beta • No credit card required
         </p>
       </div>
