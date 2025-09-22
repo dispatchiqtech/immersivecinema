@@ -32,6 +32,13 @@ const Footer = () => {
             >
               LinkedIn
             </a>
+            <a 
+              href="/admin" 
+              className="text-muted hover:text-primary transition-colors duration-300"
+              aria-label="Admin Dashboard"
+            >
+              Admin
+            </a>
           </div>
           
           <div className="pt-6 border-t border-border/20">

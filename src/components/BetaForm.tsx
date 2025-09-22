@@ -3,21 +3,45 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const BetaForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: "",
-    role: "creator"
+    role: "creator" as "creator" | "viewer"
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase
+        .from('beta_signups')
+        .insert([
+          {
+            email: formData.email,
+            role: formData.role
+          }
+        ])
+        .select();
+
+      if (error) {
+        throw error;
+      }
+
       setSubmitted(true);
-    }, 500);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -40,7 +64,7 @@ const BetaForm = () => {
   }
 
   return (
-    <section className="py-24 px-6 relative">
+    <section id="join-beta" className="py-24 px-6 relative">
       <div className="max-w-md mx-auto">
         <div className="text-center mb-8">
           <h2 className="font-space text-4xl md:text-5xl font-bold mb-6 text-gradient">
@@ -75,7 +99,10 @@ const BetaForm = () => {
                     name="role"
                     value="creator"
                     checked={formData.role === "creator"}
-                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    onChange={(e) => {
+                      const value = e.target.value as "creator" | "viewer";
+                      setFormData({ ...formData, role: value });
+                    }}
                     className="text-primary"
                   />
                   <span className="text-foreground">Creator (filmmaker, storyteller, artist)</span>
@@ -86,7 +113,10 @@ const BetaForm = () => {
                     name="role"
                     value="viewer"
                     checked={formData.role === "viewer"}
-                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    onChange={(e) => {
+                      const value = e.target.value as "creator" | "viewer";
+                      setFormData({ ...formData, role: value });
+                    }}
                     className="text-primary"
                   />
                   <span className="text-foreground">Viewer (story explorer, XR enthusiast)</span>
@@ -94,9 +124,26 @@ const BetaForm = () => {
               </div>
             </div>
             
-            <Button type="submit" className="w-full text-lg py-6">
-              Step Into the Future
+            <Button 
+              type="submit" 
+              className="w-full text-lg py-6" 
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Joining Beta...
+                </>
+              ) : (
+                'Step Into the Future'
+              )}
             </Button>
+            
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-50 dark:bg-red-950 p-3 rounded-md">
+                {error}
+              </div>
+            )}
             
             <p className="text-xs text-muted-foreground text-center">
               No spam, just updates on beta access and immersive storytelling.

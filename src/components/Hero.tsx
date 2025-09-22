@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button";
 import portalHero from "@/assets/portal-hero.jpg";
 
 const Hero = () => {
+  const scrollToBeta = () => {
+    const betaSection = document.getElementById('join-beta');
+    if (betaSection) {
+      betaSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Starfield Background */}
@@ -34,10 +41,20 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button variant="hero" size="lg" className="px-8 py-4 text-lg font-semibold">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            className="px-8 py-4 text-lg font-semibold font-space"
+            onClick={scrollToBeta}
+          >
             Join as Creator
           </Button>
-          <Button variant="hero" size="lg" className="px-8 py-4 text-lg font-semibold">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            className="px-8 py-4 text-lg font-semibold font-space"
+            onClick={scrollToBeta}
+          >
             Explore as Viewer
           </Button>
         </div>
