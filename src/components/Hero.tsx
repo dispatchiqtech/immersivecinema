@@ -30,6 +30,8 @@ const Hero = () => {
         </div>
       </div>
       
+      {/* Logo - Top Left */}
+     
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1 className="font-space text-6xl md:text-8xl font-bold mb-6 text-gradient drop-shadow-2xl">
